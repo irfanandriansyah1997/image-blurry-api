@@ -1,9 +1,18 @@
+import os
 from flask import Flask
 from flask_cors import CORS
 from flasgger import Swagger
+from flask_uploads import UploadSet, configure_uploads, IMAGES, patch_request_class
 
 cors = CORS()
 app = Flask(__name__)
+app.config['SWAGGER'] = {'title': 'Api Documentation', 'uiversion': 2}
+app.config['UPLOADED_PHOTOS_DEST'] = os.getcwd() + '/upload'
+app.config.from_object('config')
+
+photos = UploadSet('photos', IMAGES)
+configure_uploads(app, photos)
+patch_request_class(app)
 
 def create_app(debug=False):
     """
@@ -13,8 +22,6 @@ def create_app(debug=False):
     :param debug: boolean
     """
 
-    app.config['SWAGGER'] = {'title': 'Api Documentation', 'uiversion': 2}
-    app.config.from_object('config')
     app.debug = debug
 
     # register blueprints
