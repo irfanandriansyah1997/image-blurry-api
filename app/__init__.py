@@ -17,6 +17,11 @@ def create_app(debug=False):
     app.config.from_object('config')
     app.debug = debug
 
+    # register blueprints
+    from app.router.blur import mod as blur_route
+
+    app.register_blueprint(blur_route)
+
     # register extensions
     cors.init_app(app)
     swagger = Swagger(app)
