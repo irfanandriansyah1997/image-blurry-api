@@ -14,14 +14,16 @@ class BlurModules:
 
     IMAGE = ''
     BACKGROUND = None
+    INDEX = 5
 
-    def __init__(self, images):
+    def __init__(self, images, index):
         """
         Constructor
         :param images: Str
         """
         self.IMAGE: str = os.path.abspath(os.getcwd()) + '/upload/' + images
         self.BACKGROUND = self.setterBackground()
+        self.INDEX = index
     
     def setterBackground(self):
         """
@@ -33,7 +35,7 @@ class BlurModules:
         """
         Setter background image
         """
-        return image.filter(ImageFilter.GaussianBlur(radius=5))
+        return image.filter(ImageFilter.GaussianBlur(radius=self.INDEX))
     
     def setterPath(self):
         base_filename = os.path.basename(self.IMAGE)

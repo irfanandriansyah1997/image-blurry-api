@@ -17,7 +17,10 @@ def upload_images():
         if request.method == 'POST' and 'photo' in request.files:
             filename = photos.save(request.files['photo'])
             file_url = photos.url(filename)
-            blur_images = BlurModules(filename).run()
+            blur_images = BlurModules(
+                filename,
+                int(request.form.get('radius'))
+            ).run()
 
             return responseAPIHelper({
                 'original_image': file_url,
